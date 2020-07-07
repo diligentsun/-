@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,30 @@ public class ExampleCustomerManager {
 			}
 		}
 		return null;
+	}
+
+
+	public void modifyCustomer(BeanCustomer customer) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		try {
+			con = DBUtil.getConnection();
+			String sql = "update 用户 set 姓名 = ? ,性别=?,密码=?,邮箱=?,所在城市=?,是否会员=?,会员截止日期=? wehre 用户编号=?";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, customer.getName());
+			pst.setString(2, customer.getSex());
+			pst.setString(3, customer.getPwd());
+			pst.setString(4, customer.getEmail());
+			pst.setString(5, customer.getCity());
+			pst.setString(6, customer.getIsMember());
+			if(customer.getMemberEndTime()!=null)pst.setDate(7, new java.sql.Date(customer.getMemberEndTime().getTime()));
+			else pst.setNull(7, java.sql.Types.DATE);
+			pst.setInt(8, customer.getId());
+			pst.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

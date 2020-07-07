@@ -27,8 +27,7 @@ import cn.edu.zucc.Takeaway.util.BaseException;
 
 public class FrmCustomerInformation extends JDialog implements ActionListener{
 	private JPanel toolBar = new JPanel();
-	private Button btnAdd = new Button("添加用户");
-	private Button btnModify = new Button("修改信息");
+	private Button btnModify = new Button("查看详细信息");
 	private Button btnRemove = new Button("移除用户");
 	private Object tblTitle[]={"用户编号","姓名","手机号"};
 	private Object tblData[][];
@@ -55,7 +54,6 @@ public class FrmCustomerInformation extends JDialog implements ActionListener{
 	}
 	public FrmCustomerInformation(Frame f, String s, boolean b) {
 		toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
-		toolBar.add(btnAdd);
 		toolBar.add(btnModify);
 		toolBar.add(btnRemove);
 		this.getContentPane().add(toolBar, BorderLayout.NORTH);
@@ -69,7 +67,6 @@ public class FrmCustomerInformation extends JDialog implements ActionListener{
 
 		this.validate();
 		this.btnModify.addActionListener(this);
-		this.btnAdd.addActionListener(this);
 		this.btnRemove.addActionListener(this);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -80,25 +77,19 @@ public class FrmCustomerInformation extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-//		if(e.getSource()==this.btnModify){
-//			int i=this.userTable.getSelectedRow();
-//			if(i<0) {
-//				JOptionPane.showMessageDialog(null,  "请选择商店","提示",JOptionPane.ERROR_MESSAGE);
-//				return;
-//			}
-//			BeanCustomer Customer = this.users.get(i);
-//			FrmModifyStore dlg = new FrmModifyStore(this,"修改店铺",true,Store);
-//			dlg.setVisible(true);
-//			if(dlg.getStore()!=null){//刷新表格
-//				this.reloadUserTable();;
-//			}
-//		}else if(e.getSource()==this.btnAdd){
-//			FrmAddStore dlg = new FrmAddStore(this,"添加店铺",true);
-//			dlg.setVisible(true);
-//			if(dlg.getStore()!=null){//刷新表格
-//				this.reloadUserTable();;
-//			}
-//		}else if(e.getSource()==this.btnRemove){
+		if(e.getSource()==this.btnModify){
+			int i=this.userTable.getSelectedRow();
+			if(i<0) {
+				JOptionPane.showMessageDialog(null,  "请选择商店","提示",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			BeanCustomer Customer = this.users.get(i);
+			FrmModifyCustomer dlg = new FrmModifyCustomer(this,"客户信息",true,Customer);
+			dlg.setVisible(true);
+			if(dlg.getCustomer()!=null){//刷新表格
+				this.reloadUserTable();;
+			}
+		}//else if(e.getSource()==this.btnRemove){
 //			int i=this.userTable.getSelectedRow();
 //			if(i<0) {
 //				JOptionPane.showMessageDialog(null,  "请选择商店","提示",JOptionPane.ERROR_MESSAGE);
@@ -115,7 +106,7 @@ public class FrmCustomerInformation extends JDialog implements ActionListener{
 //				
 //			}
 //		} 
-		
+//		
 	}
 
 }

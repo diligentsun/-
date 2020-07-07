@@ -1,10 +1,6 @@
 package cn.edu.zucc.Takeaway.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.FlowLayout;
 import java.awt.Frame;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -21,11 +17,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
 import cn.edu.zucc.Takeaway.model.BeanUser;
 
 public class FrmMain extends JFrame implements ActionListener{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private FrmLogin dlgLogin=null;
 	
 	public FrmMain(){
