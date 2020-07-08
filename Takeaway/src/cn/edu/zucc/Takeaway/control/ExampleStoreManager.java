@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import cn.edu.zucc.Takeaway.model.BeanCustomer;
+import cn.edu.zucc.Takeaway.model.BeanRider;
 import cn.edu.zucc.Takeaway.model.BeanStore;
 import cn.edu.zucc.Takeaway.util.BusinessException;
 import cn.edu.zucc.Takeaway.util.DBUtil;
@@ -142,6 +144,32 @@ public class ExampleStoreManager {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void addRider(BeanRider rider) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		try {
+			con = DBUtil.getConnection();
+			String sql = "insert into 骑手信息(骑手姓名,入职日期,骑手身份) values(?,?,?)";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, rider.getName());
+			pst.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+			pst.setString(3, rider.getSign());
+			pst.execute();
+			pst.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 

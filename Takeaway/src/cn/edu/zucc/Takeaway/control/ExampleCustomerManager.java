@@ -59,7 +59,7 @@ public class ExampleCustomerManager {
 		Connection con = null;
 		try {
 			con = DBUtil.getConnection();
-			String sql = "update 用户 set 姓名 = ? ,性别=?,密码=?,邮箱=?,所在城市=?,是否会员=?,会员截止日期=? wehre 用户编号=?";
+			String sql = "update 用户 set 姓名 = ? ,性别=?,密码=?,邮箱=?,所在城市=?,是否会员=?,会员截止日期=? where 用户编号 = ?";
 			PreparedStatement pst = con.prepareStatement(sql);
 			pst.setString(1, customer.getName());
 			pst.setString(2, customer.getSex());
@@ -67,7 +67,11 @@ public class ExampleCustomerManager {
 			pst.setString(4, customer.getEmail());
 			pst.setString(5, customer.getCity());
 			pst.setString(6, customer.getIsMember());
-			if(customer.getMemberEndTime()!=null)pst.setDate(7, new java.sql.Date(customer.getMemberEndTime().getTime()));
+			if(customer.getMemberEndTime()!=null)
+				{
+				System.out.print("000");
+				pst.setDate(7, new java.sql.Date(customer.getMemberEndTime().getTime()));
+				}
 			else pst.setNull(7, java.sql.Types.DATE);
 			pst.setInt(8, customer.getId());
 			pst.execute();
@@ -75,6 +79,32 @@ public class ExampleCustomerManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+
+	public void removeCustomer(BeanCustomer customer) {
+		// TODO Auto-generated method stub
+				Connection con = null;
+				try {
+					con = DBUtil.getConnection();
+					String sql = "update 用户 set 移除时间 = ? where 用户编号= ?";
+					PreparedStatement pst = con.prepareStatement(sql);
+					pst.setDate(1, new java.sql.Date(System.currentTimeMillis()));
+					pst.setInt(2, customer.getId());
+					pst.execute();
+					pst.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}finally {
+					try {
+						con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+		
 	}
 
 }

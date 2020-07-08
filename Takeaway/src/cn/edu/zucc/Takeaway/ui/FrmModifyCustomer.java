@@ -129,12 +129,12 @@ public class FrmModifyCustomer extends JDialog implements ActionListener{
 				JOptionPane.showMessageDialog(null, "姓名长度只能在1-20之间","错误",JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			Customer.setName(this.edtName.getText());
+			Customer.setSex(this.edtSex.getText());
 			if(!(this.edtSex.getText().equals("男")||this.edtSex.getText().equals("女"))){
 				JOptionPane.showMessageDialog(null, "性别只能为男或女","错误",JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			Customer.setSex(this.edtName.getText());
+			Customer.setSex(this.edtSex.getText());
 			if(this.edtPwd.getText().length()==0||this.edtPwd.getText().length()>18){
 				JOptionPane.showMessageDialog(null, "密码长度只能在1-18之间","错误",JOptionPane.ERROR_MESSAGE);
 				return;
@@ -154,7 +154,11 @@ public class FrmModifyCustomer extends JDialog implements ActionListener{
 				JOptionPane.showMessageDialog(null, "没有会员不能设置会员截止时间","错误",JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			if(this.edtMemberEndTime.getText().equals("")&&this.edtisMember.getText().equals("是")) {
+			if(this.edtisMember.getText().equals("是")&&this.edtMemberEndTime.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "开设会员必须设置截止时间","错误",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			if(this.edtisMember.getText().equals("是")) {
 				try {
 					Customer.setMemberEndTime(SDF.parse(this.edtMemberEndTime.getText()));
 				} catch (ParseException e2) {

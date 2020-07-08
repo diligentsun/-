@@ -26,6 +26,7 @@ public class FrmSystemerMain extends JFrame implements ActionListener{
     private JMenuItem  menuItem_DeleteSystemer=new JMenuItem("注销账号");
     private JMenuItem  menuItem_StoreInformation=new JMenuItem("商家信息");
     private JMenuItem  menuItem_CustomerInformation=new JMenuItem("客户信息");
+    private JMenuItem  menuItem_RiderInformation=new JMenuItem("骑手信息");
     private JPanel statusBar = new JPanel();
 	public static BeanUser currentLoginUser = null;
 	public FrmSystemerMain(){
@@ -33,6 +34,8 @@ public class FrmSystemerMain extends JFrame implements ActionListener{
     	menuItem_StoreInformation.addActionListener(this);
     	menu_user.add(menuItem_CustomerInformation);
     	menuItem_CustomerInformation.addActionListener(this);
+    	menu_user.add(menuItem_RiderInformation);
+    	menuItem_RiderInformation.addActionListener(this);
     	menubar.add(this.menu_user);
     	
     	menu_System.add(menuItem_AddSystemer);
@@ -70,6 +73,9 @@ public class FrmSystemerMain extends JFrame implements ActionListener{
 			dlg.setVisible(true);
 		}else if(e.getSource()==this.menuItem_CustomerInformation){
 			FrmCustomerInformation dlg=new FrmCustomerInformation(this,"客户信息",true);
+			dlg.setVisible(true);
+		}else if(e.getSource()==this.menuItem_RiderInformation){
+			FrmRiderInformation dlg=new FrmRiderInformation(this,"骑手信息",true);
 			dlg.setVisible(true);
 		}
 	}

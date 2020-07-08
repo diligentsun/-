@@ -21,28 +21,30 @@ import javax.swing.table.DefaultTableModel;
 
 import cn.edu.zucc.Takeaway.control.ExampleStoreManager;
 import cn.edu.zucc.Takeaway.model.BeanCustomer;
+import cn.edu.zucc.Takeaway.model.BeanRider;
 import cn.edu.zucc.Takeaway.model.BeanStore;
 import cn.edu.zucc.Takeaway.start.TakeawayUtil;
 import cn.edu.zucc.Takeaway.util.BaseException;
 
-public class FrmCustomerInformation extends JDialog implements ActionListener{
+public class FrmRiderInformation extends JDialog implements ActionListener{
 	private JPanel toolBar = new JPanel();
-	private Button btnModify = new Button("查看详细信息");
-	private Button btnRemove = new Button("移除用户");
-	private Object tblTitle[]={"用户编号","姓名","手机号"};
+	private Button btnAdd = new Button("添加骑手");
+	private Button btnModify = new Button("修改信息");
+	private Button btnRemove = new Button("移除骑手");
+	private Object tblTitle[]={"骑手编号","骑手姓名","骑手身份"};
 	private Object tblData[][];
 	DefaultTableModel tablmod=new DefaultTableModel();
 	private JTable userTable=new JTable(tablmod);
-	List<BeanCustomer> users=null;
+	List<BeanRider> users=null;
 	private void reloadUserTable(){
 		try {
-			users=TakeawayUtil.CustomerManager.loadAllUsers();
+			users=TakeawayUtil.RiderManager.loadAllUsers();
 			tblData =new Object[users.size()][3];
 			System.out.print(users.size());
 			for(int i=0;i<users.size();i++){
 				tblData[i][0]=users.get(i).getId();
 				tblData[i][1]=""+users.get(i).getName();
-				tblData[i][2]=""+users.get(i).getPhonenum();
+				tblData[i][2]=""+users.get(i).getSign();
 			}
 			tablmod.setDataVector(tblData,tblTitle);
 			this.userTable.validate();
@@ -52,8 +54,9 @@ public class FrmCustomerInformation extends JDialog implements ActionListener{
 			e.printStackTrace();
 		}
 	}
-	public FrmCustomerInformation(Frame f, String s, boolean b) {
+	public FrmRiderInformation(Frame f, String s, boolean b) {
 		toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
+		toolBar.add(btnAdd);
 		toolBar.add(btnModify);
 		toolBar.add(btnRemove);
 		this.getContentPane().add(toolBar, BorderLayout.NORTH);
@@ -66,6 +69,7 @@ public class FrmCustomerInformation extends JDialog implements ActionListener{
 				(int) (height - this.getHeight()) / 2);
 
 		this.validate();
+		this.btnAdd.addActionListener(this);
 		this.btnModify.addActionListener(this);
 		this.btnRemove.addActionListener(this);
 		this.addWindowListener(new WindowAdapter() {
@@ -77,28 +81,35 @@ public class FrmCustomerInformation extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource()==this.btnModify){
+		if(e.getSource()==this.btnAdd){
+			int i=this.userTable.getSelectedRow();
+			FrmAddRider dlg = new FrmAddRider(this,"添加骑手",true);
+			dlg.setVisible(true);
+			if(dlg.getRider()!=null){//刷新表格
+				this.reloadUserTable();
+			}
+		}else if(e.getSource()==this.btnModify){
 			int i=this.userTable.getSelectedRow();
 			if(i<0) {
-				JOptionPane.showMessageDialog(null,  "请选择客户","提示",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,  "请选择骑手","提示",JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			BeanCustomer Customer = this.users.get(i);
-			FrmModifyCustomer dlg = new FrmModifyCustomer(this,"客户信息",true,Customer);
+			BeanRider Rider = this.users.get(i);
+			FrmModifyRider dlg = new FrmModifyRider(this,"骑手信息",true,Rider);
 			dlg.setVisible(true);
-			if(dlg.getCustomer()!=null){//刷新表格
+			if(dlg.getRider()!=null){//刷新表格
 				this.reloadUserTable();
 			}
 		}else if(e.getSource()==this.btnRemove){
 			int i=this.userTable.getSelectedRow();
 			if(i<0) {
-				JOptionPane.showMessageDialog(null,  "请选择客户","提示",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,  "请选择骑手","提示",JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			BeanCustomer Customer = this.users.get(i);
-			if(JOptionPane.showConfirmDialog(this,"确定删除该商家吗？","确认",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+			BeanRider Rider = this.users.get(i);
+			if(JOptionPane.showConfirmDialog(this,"确定删除该骑手吗？","确认",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
 				try {
-					TakeawayUtil.CustomerManager.removeCustomer(Customer);
+					TakeawayUtil.RiderManager.removeRider(Rider);
 					this.reloadUserTable();
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(),"错误",JOptionPane.ERROR_MESSAGE);
