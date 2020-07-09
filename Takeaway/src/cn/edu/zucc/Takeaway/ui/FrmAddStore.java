@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 
 import cn.edu.zucc.Takeaway.control.ExampleStoreManager;
 import cn.edu.zucc.Takeaway.model.BeanStore;
+import cn.edu.zucc.Takeaway.start.TakeawayUtil;
 public class FrmAddStore extends JDialog implements ActionListener{
 	private BeanStore Store =new BeanStore();
 	
@@ -92,7 +93,7 @@ public class FrmAddStore extends JDialog implements ActionListener{
 			this.Store.setName(name);
 			this.Store.setRating(n);
 			try {
-				(new ExampleStoreManager()).addStore(this.Store);
+				TakeawayUtil.StoreManager.addStore(this.Store);
 				this.setVisible(false);
 			} catch (Exception e1) {
 				this.Store=null;

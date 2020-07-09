@@ -26,6 +26,8 @@ import cn.edu.zucc.Takeaway.util.BaseException;
 
 public class FrmStoreInformation extends JDialog implements ActionListener{
 	private JPanel toolBar = new JPanel();
+	private Button btnWatchGoods = new Button("查看商品");
+	private Button btnWatchRetabe = new Button("查看满减方案");
 	private Button btnAdd = new Button("添加商店");
 	private Button btnModify = new Button("修改信息");
 	private Button btnRemove = new Button("移除商店");
@@ -55,6 +57,8 @@ public class FrmStoreInformation extends JDialog implements ActionListener{
 	}
 	public FrmStoreInformation(Frame f, String s, boolean b) {
 		toolBar.setLayout(new FlowLayout(FlowLayout.LEFT));
+		toolBar.add(btnWatchGoods);
+		toolBar.add(btnWatchRetabe);
 		toolBar.add(btnAdd);
 		toolBar.add(btnModify);
 		toolBar.add(btnRemove);
@@ -68,6 +72,8 @@ public class FrmStoreInformation extends JDialog implements ActionListener{
 				(int) (height - this.getHeight()) / 2);
 
 		this.validate();
+		this.btnWatchGoods.addActionListener(this);
+		this.btnWatchRetabe.addActionListener(this);
 		this.btnModify.addActionListener(this);
 		this.btnAdd.addActionListener(this);
 		this.btnRemove.addActionListener(this);
@@ -113,6 +119,18 @@ public class FrmStoreInformation extends JDialog implements ActionListener{
 					JOptionPane.showMessageDialog(null, e1.getMessage(),"错误",JOptionPane.ERROR_MESSAGE);
 				}
 				
+			}
+		}else if(e.getSource()==this.btnWatchRetabe){
+			int i=this.userTable.getSelectedRow();
+			if(i<0) {
+				JOptionPane.showMessageDialog(null,  "请选择商店","提示",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			BeanStore Store = this.users.get(i);
+			FrmGoodsInformation dlg = new FrmGoodsInformation(this,"查看商品",true,Store);
+			dlg.setVisible(true);
+			if(dlg.getGoods()!=null){//刷新表格
+				this.reloadUserTable();;
 			}
 		} 
 		

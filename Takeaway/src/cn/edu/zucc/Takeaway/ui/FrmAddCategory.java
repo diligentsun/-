@@ -18,22 +18,21 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import cn.edu.zucc.Takeaway.control.ExampleStoreManager;
+import cn.edu.zucc.Takeaway.model.BeanCategory;
 import cn.edu.zucc.Takeaway.model.BeanRider;
 import cn.edu.zucc.Takeaway.model.BeanStore;
 import cn.edu.zucc.Takeaway.start.TakeawayUtil;
-public class FrmAddRider extends JDialog implements ActionListener{
-	private BeanRider Rider =new BeanRider();
+public class FrmAddCategory extends JDialog implements ActionListener{
+	private BeanCategory Category =new BeanCategory();
 	
 	private JPanel toolBar = new JPanel();
 	private JPanel workPane = new JPanel();
 	private Button btnOk = new Button("确定");
 	private Button btnCancel = new Button("取消");
 	
-	private JLabel labelName = new JLabel("骑手姓名：");
-	private JLabel labelSign = new JLabel("骑手身份：");
+	private JLabel labelName = new JLabel("分类栏目名：");
 	private JTextField edtName = new JTextField(20);
-	private JTextField edtSign = new JTextField(20);
-	public FrmAddRider(Dialog d, String s, boolean b){
+	public FrmAddCategory(Dialog d, String s, boolean b){
 		super(d,s,b);
 		toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		toolBar.add(btnOk);
@@ -41,8 +40,6 @@ public class FrmAddRider extends JDialog implements ActionListener{
 		this.getContentPane().add(toolBar, BorderLayout.SOUTH);
 		workPane.add(labelName);
 		workPane.add(edtName);
-		workPane.add(labelSign);
-		workPane.add(edtSign);
 		this.getContentPane().add(workPane, BorderLayout.CENTER);
 		this.setSize(300, 160);
 		// 屏幕居中显示
@@ -56,7 +53,7 @@ public class FrmAddRider extends JDialog implements ActionListener{
 				this.btnCancel.addActionListener(this);
 				this.addWindowListener(new WindowAdapter() {
 					public void windowClosing(WindowEvent e) {
-						FrmAddRider.this.Rider=null;
+						FrmAddCategory.this.Category=null;
 					}
 				});
 	}
@@ -65,34 +62,28 @@ public class FrmAddRider extends JDialog implements ActionListener{
 		// TODO Auto-generated method stub
 		if(e.getSource()==this.btnCancel) {
 			this.setVisible(false);
-			this.Rider=null;
+			this.Category=null;
 			return;
 		}else if(e.getSource()==this.btnOk){
 			String name=this.edtName.getText();
-			String sign = this.edtSign.getText();
-			if(name.equals("")||sign.equals("")){
-				JOptionPane.showMessageDialog(null, "骑手姓名和骑手身份不得为空","错误",JOptionPane.ERROR_MESSAGE);
+			if(name.equals("")){
+				JOptionPane.showMessageDialog(null, "分类栏目名不得为空","错误",JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			if(!(sign.equals("新人")||sign.equals("正式员工")||sign.equals("单王"))){
-				JOptionPane.showMessageDialog(null, "骑手身份必须为新人，正式员工，单王中的一个","错误",JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			this.Rider.setName(name);
-			this.Rider.setSign(sign);
+			this.Category.setName(name);
 			try {
-				TakeawayUtil.RiderManager.addRider(this.Rider);
+				TakeawayUtil.CategoryManager.addCategory(this.Category);
 				this.setVisible(false);
 			} catch (Exception e1) {
-				this.Rider=null;
+				this.Category=null;
 				JOptionPane.showMessageDialog(null, e1.getMessage(),"错误",JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		
 	}
-	public Object getRider() {
+	public BeanCategory getCategory() {
 		// TODO Auto-generated method stub
-		return this.Rider;
+		return this.Category;
 	}
 
 }

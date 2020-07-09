@@ -27,6 +27,7 @@ public class FrmSystemerMain extends JFrame implements ActionListener{
     private JMenuItem  menuItem_StoreInformation=new JMenuItem("商家信息");
     private JMenuItem  menuItem_CustomerInformation=new JMenuItem("客户信息");
     private JMenuItem  menuItem_RiderInformation=new JMenuItem("骑手信息");
+    private JMenuItem  menuItem_CategoryInformation=new JMenuItem("商品类别");
     private JPanel statusBar = new JPanel();
 	public static BeanUser currentLoginUser = null;
 	public FrmSystemerMain(){
@@ -36,15 +37,15 @@ public class FrmSystemerMain extends JFrame implements ActionListener{
     	menuItem_CustomerInformation.addActionListener(this);
     	menu_user.add(menuItem_RiderInformation);
     	menuItem_RiderInformation.addActionListener(this);
+    	menu_user.add(menuItem_CategoryInformation);
+    	menuItem_CategoryInformation.addActionListener(this);
     	menubar.add(this.menu_user);
-    	
     	menu_System.add(menuItem_AddSystemer);
     	menuItem_AddSystemer.addActionListener(this);
     	menu_System.add(menuItem_ChangePwd);
     	menuItem_ChangePwd.addActionListener(this);
     	menu_System.add(menuItem_DeleteSystemer);
     	menuItem_DeleteSystemer.addActionListener(this);
-    	
     	menubar.add(this.menu_System);
 	    this.setJMenuBar(menubar);
 	    
@@ -76,6 +77,9 @@ public class FrmSystemerMain extends JFrame implements ActionListener{
 			dlg.setVisible(true);
 		}else if(e.getSource()==this.menuItem_RiderInformation){
 			FrmRiderInformation dlg=new FrmRiderInformation(this,"骑手信息",true);
+			dlg.setVisible(true);
+		}else if(e.getSource()==this.menuItem_CategoryInformation){
+			FrmCategoryInformation dlg=new FrmCategoryInformation(this,"商品类别",true);
 			dlg.setVisible(true);
 		}
 	}

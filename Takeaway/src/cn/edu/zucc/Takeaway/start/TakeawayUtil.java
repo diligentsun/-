@@ -1,6 +1,8 @@
 package cn.edu.zucc.Takeaway.start;
 
+import cn.edu.zucc.Takeaway.control.ExampleCategoryManager;
 import cn.edu.zucc.Takeaway.control.ExampleCustomerManager;
+import cn.edu.zucc.Takeaway.control.ExampleGoodsManager;
 import cn.edu.zucc.Takeaway.control.ExampleRiderManager;
 import cn.edu.zucc.Takeaway.control.ExampleStoreManager;
 import cn.edu.zucc.Takeaway.control.ExampleSystemerManager;
@@ -12,5 +14,7 @@ public class TakeawayUtil {
 	public static ExampleStoreManager StoreManager=new ExampleStoreManager();
 	public static ExampleCustomerManager CustomerManager=new ExampleCustomerManager();
 	public static ExampleRiderManager RiderManager=new ExampleRiderManager();
+	public static ExampleCategoryManager CategoryManager=new ExampleCategoryManager();
+	public static ExampleGoodsManager GoodsManager=new ExampleGoodsManager();
 }
 	

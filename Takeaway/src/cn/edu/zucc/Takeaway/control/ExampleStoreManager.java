@@ -146,31 +146,6 @@ public class ExampleStoreManager {
 		}
 	}
 
-	public void addRider(BeanRider rider) {
-		// TODO Auto-generated method stub
-		Connection con = null;
-		try {
-			con = DBUtil.getConnection();
-			String sql = "insert into 骑手信息(骑手姓名,入职日期,骑手身份) values(?,?,?)";
-			PreparedStatement pst = con.prepareStatement(sql);
-			pst.setString(1, rider.getName());
-			pst.setDate(2, new java.sql.Date(System.currentTimeMillis()));
-			pst.setString(3, rider.getSign());
-			pst.execute();
-			pst.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-	}
 
 
 }
